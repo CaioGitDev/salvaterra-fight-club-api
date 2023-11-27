@@ -10,19 +10,85 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        String    @id @default(uuid())
+  name      String
+  email     String    @unique
+  password  String
+  role      Role      @default(USER)
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+
+  @@map("users")
+}
+
+model Member {
+  id               String   @id @unique @default(uuid())
+  membershipNumber Int      @unique @default(autoincrement()) @map("membership_number")
+  photoUrl         String?  @map("photo_url")
+  fullName         String   @map("full_name")
+  genderId         Int      @map("gender_id")
+  dateOfBirth      DateTime @map("date_of_Birth")
+  nationalityId    Int      @map("nationality_id")
+  placeOfBirth     String   @map("place_of_birth")
+  contact          String
+  email            String
+  modalityId       Int      @map("modality_id")
+  frequencyId      Int      @map("frequency_id")
+
+  gender      Gender      @relation(fields: [genderId], references: [id])
+  nationality Nationality @relation(fields: [nationalityId], references: [id])
+  modality    Modality    @relation(fields: [modalityId], references: [id])
+  frequency   Frequency   @relation(fields: [frequencyId], references: [id])
+
+  @@map("members")
+}
+
+model Gender {
+  id          Int      @id @unique @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  active      Boolean  @default(true)
+  Member      Member[]
+
+  @@map("genres")
+}
+
+model Nationality {
+  id          Int      @id @unique @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  active      Boolean  @default(true)
+  Member      Member[]
+
+  @@map("nationalities")
+}
+
+model Modality {
+  id          Int      @id @unique @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  active      Boolean  @default(true)
+  Member      Member[]
+
+  @@map("frequencies")
+}
+
+model Frequency {
+  id          Int      @id @unique @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  active      Boolean  @default(true)
+  Member      Member[]
+
+  @@map("modalities")
+}
+
 enum Role {
   USER
   ADMIN
-}
-
-model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  @@map("users")
 }
