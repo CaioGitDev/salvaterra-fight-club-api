@@ -23,25 +23,84 @@ model User {
 }
 
 model Member {
-  id               String   @id @unique @default(uuid())
-  membershipNumber Int      @unique @default(autoincrement()) @map("membership_number")
-  photoUrl         String?  @map("photo_url")
-  fullName         String   @map("full_name")
-  genderId         Int      @map("gender_id")
-  dateOfBirth      DateTime @map("date_of_Birth")
-  nationalityId    Int      @map("nationality_id")
-  placeOfBirth     String   @map("place_of_birth")
-  contact          String
-  email            String
-  modalityId       Int      @map("modality_id")
-  frequencyId      Int      @map("frequency_id")
+  id                 String    @id @unique @default(uuid())
+  membershipNumber   Int       @unique @default(autoincrement()) @map("membership_number")
+  photoUrl           String?   @map("photo_url")
+  fullName           String    @map("full_name")
+  genderId           Int       @map("gender_id")
+  dateOfBirth        DateTime  @map("date_of_Birth")
+  nationalityId      Int       @map("nationality_id")
+  placeOfBirth       String    @map("place_of_birth")
+  contact            String
+  email              String
+  modalityId         Int       @map("modality_id")
+  frequencyId        Int       @map("frequency_id")
+  memberTypeId       Int       @map("memberType_id")
+  paymentFrequencyId Int       @map("paymentFrequency_id")
+  termsAndConditions Boolean
+  healthDeclaration  Boolean
+  createdAt          DateTime  @default(now()) @map("created_at")
+  updatedAt          DateTime? @updatedAt @map("updated_at")
+  active             Boolean   @default(true)
 
-  gender      Gender      @relation(fields: [genderId], references: [id])
-  nationality Nationality @relation(fields: [nationalityId], references: [id])
-  modality    Modality    @relation(fields: [modalityId], references: [id])
-  frequency   Frequency   @relation(fields: [frequencyId], references: [id])
+  IdentityDocument IdentityDocument[]
+  Address          Address[]
+  Guardian         Guardian[]
+
+  gender           Gender           @relation(fields: [genderId], references: [id])
+  nationality      Nationality      @relation(fields: [nationalityId], references: [id])
+  modality         Modality         @relation(fields: [modalityId], references: [id])
+  frequency        Frequency        @relation(fields: [frequencyId], references: [id])
+  memberType       MemberType       @relation(fields: [memberTypeId], references: [id])
+  paymentFrequency PaymentFrequency @relation(fields: [paymentFrequencyId], references: [id])
 
   @@map("members")
+}
+
+model IdentityDocument {
+  id                      String    @id @unique @default(uuid())
+  memberId                String    @map("member_id")
+  identityDocumentTypeId  Int       @map("identity_document_type_id")
+  identificationNumber    String    @map("identification_number")
+  expireDate              DateTime  @map("expire_date")
+  taxIdentificationNumber BigInt    @map("tax_identification_number")
+  createdAt               DateTime  @default(now()) @map("created_at")
+  updatedAt               DateTime? @updatedAt @map("updated_at")
+
+  member           Member               @relation(fields: [memberId], references: [id])
+  identityDocument IdentityDocumentType @relation(fields: [identityDocumentTypeId], references: [id])
+}
+
+model Address {
+  id         String    @id @unique @default(uuid())
+  memberId   String    @map("member_id")
+  Address    String
+  city       String
+  county     String
+  parish     String
+  postalCode String    @map("postal_code")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime? @updatedAt @map("updated_at")
+
+  member Member @relation(fields: [memberId], references: [id])
+}
+
+model Guardian {
+  id                   String   @id @unique @default(uuid())
+  fullName             String   @map("full_name")
+  memberId             String   @map("member_id")
+  relationshipDegreeId Int      @map("relationship_degree_id")
+  contact              String
+  address              String
+  city                 String
+  county               String
+  parish               String
+  postalCode           String   @map("postal_code")
+  createdAt            DateTime @default(now()) @map("created_at")
+  updatedAt            DateTime? @updatedAt @map("updated_at")
+
+  Member             Member             @relation(fields: [memberId], references: [id])
+  RelationshipDegree RelationshipDegree @relation(fields: [relationshipDegreeId], references: [id])
 }
 
 model Gender {
@@ -86,6 +145,50 @@ model Frequency {
   Member      Member[]
 
   @@map("modalities")
+}
+
+model MemberType {
+  id          Int      @id @unique @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  active      Boolean  @default(true)
+  Member      Member[]
+
+  @@map("member_types")
+}
+
+model PaymentFrequency {
+  id          Int      @id @unique @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  active      Boolean  @default(true)
+  Member      Member[]
+
+  @@map("payment_frequencies")
+}
+
+model RelationshipDegree {
+  id          Int        @id @unique @default(autoincrement())
+  name        String
+  description String?
+  createdAt   DateTime   @default(now()) @map("created_at")
+  active      Boolean    @default(true)
+  Guardian    Guardian[]
+
+  @@map("relationship_degrees")
+}
+
+model IdentityDocumentType {
+  id               Int                @id @unique @default(autoincrement())
+  name             String
+  description      String?
+  createdAt        DateTime           @default(now()) @map("created_at")
+  active           Boolean            @default(true)
+  IdentityDocument IdentityDocument[]
+
+  @@map("identity_document_types")
 }
 
 enum Role {
