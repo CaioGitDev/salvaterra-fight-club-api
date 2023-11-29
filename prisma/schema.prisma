@@ -69,6 +69,8 @@ model IdentityDocument {
 
   member           Member               @relation(fields: [memberId], references: [id])
   identityDocument IdentityDocumentType @relation(fields: [identityDocumentTypeId], references: [id])
+
+  @@map("identification_documents")
 }
 
 model Address {
@@ -83,24 +85,28 @@ model Address {
   updatedAt  DateTime? @updatedAt @map("updated_at")
 
   member Member @relation(fields: [memberId], references: [id])
+
+  @@map("addresses")
 }
 
 model Guardian {
-  id                   String   @id @unique @default(uuid())
-  fullName             String   @map("full_name")
-  memberId             String   @map("member_id")
-  relationshipDegreeId Int      @map("relationship_degree_id")
+  id                   String    @id @unique @default(uuid())
+  fullName             String    @map("full_name")
+  memberId             String    @map("member_id")
+  relationshipDegreeId Int       @map("relationship_degree_id")
   contact              String
   address              String
   city                 String
   county               String
   parish               String
-  postalCode           String   @map("postal_code")
-  createdAt            DateTime @default(now()) @map("created_at")
+  postalCode           String    @map("postal_code")
+  createdAt            DateTime  @default(now()) @map("created_at")
   updatedAt            DateTime? @updatedAt @map("updated_at")
 
   Member             Member             @relation(fields: [memberId], references: [id])
   RelationshipDegree RelationshipDegree @relation(fields: [relationshipDegreeId], references: [id])
+
+  @@map("guardians")
 }
 
 model Gender {
@@ -133,7 +139,7 @@ model Modality {
   active      Boolean  @default(true)
   Member      Member[]
 
-  @@map("frequencies")
+  @@map("modalities")
 }
 
 model Frequency {
@@ -144,7 +150,7 @@ model Frequency {
   active      Boolean  @default(true)
   Member      Member[]
 
-  @@map("modalities")
+  @@map("frequencies")
 }
 
 model MemberType {
