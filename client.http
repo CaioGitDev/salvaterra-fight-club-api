@@ -71,7 +71,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-# @name get_member
+# @name fetch_recent_members
 GET {{baseUrl}}/members
 Content-Type: application/json
 Authorization: Bearer {{authToken}}

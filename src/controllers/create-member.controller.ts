@@ -1,11 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  Post,
-  UseGuards,
-  Get,
-} from '@nestjs/common'
+import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common'
 import { CurrentUser } from 'src/auth/current-user-decorator'
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard'
 import { TokenPayload } from 'src/auth/jwt.strategy'
@@ -65,11 +58,6 @@ const bodyValidationPipe = new ZodValidationPipe(createMemberBodySchema)
 @UseGuards(JwtAuthGuard)
 export class CreateMemberController {
   constructor(private prisma: PrismaService) {}
-
-  @Get()
-  async getMembers() {
-    return this.prisma.member.findMany()
-  }
 
   @Post()
   @HttpCode(201)
