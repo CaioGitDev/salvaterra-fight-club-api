@@ -26,7 +26,7 @@ const createMemberBodySchema = z.object({
     identityDocumentType_id: z.number(),
     identificationNumber: z.string(),
     expireDate: z.coerce.date(),
-    taxIdentificationNumber: z.coerce.number(),
+    taxIdentificationNumber: z.string(),
   }),
   address: z.object({
     address: z.string(),

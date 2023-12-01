@@ -31,6 +31,11 @@ export class FetchRecentMembersController {
       orderBy: {
         membershipNumber: 'asc',
       },
+      include: {
+        IdentityDocument: true,
+        Address: true,
+        Guardian: true,
+      },
     })
 
     return {
