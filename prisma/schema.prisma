@@ -18,6 +18,7 @@ model User {
   role      Role      @default(USER)
   createdAt DateTime  @default(now()) @map("created_at")
   updatedAt DateTime? @updatedAt @map("updated_at")
+  Member    Member[]
 
   @@map("users")
 }
@@ -32,14 +33,15 @@ model Member {
   nationalityId      Int       @map("nationality_id")
   placeOfBirth       String    @map("place_of_birth")
   contact            String
-  email              String
+  email              String    @unique()
   modalityId         Int       @map("modality_id")
   frequencyId        Int       @map("frequency_id")
   memberTypeId       Int       @map("memberType_id")
   paymentFrequencyId Int       @map("paymentFrequency_id")
-  termsAndConditions Boolean
-  healthDeclaration  Boolean
+  termsAndConditions Boolean   @map("terms_and_conditions")
+  healthDeclaration  Boolean   @map("health_declaration")
   createdAt          DateTime  @default(now()) @map("created_at")
+  createdBy          String    @map("created_by")
   updatedAt          DateTime? @updatedAt @map("updated_at")
   active             Boolean   @default(true)
 
@@ -47,6 +49,7 @@ model Member {
   Address          Address[]
   Guardian         Guardian[]
 
+  user             User             @relation(fields: [createdBy], references: [id])
   gender           Gender           @relation(fields: [genderId], references: [id])
   nationality      Nationality      @relation(fields: [nationalityId], references: [id])
   modality         Modality         @relation(fields: [modalityId], references: [id])
@@ -76,7 +79,7 @@ model IdentityDocument {
 model Address {
   id         String    @id @unique @default(uuid())
   memberId   String    @map("member_id")
-  Address    String
+  address    String
   city       String
   county     String
   parish     String
