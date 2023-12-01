@@ -66,11 +66,11 @@ model IdentityDocument {
   identityDocumentTypeId  Int       @map("identity_document_type_id")
   identificationNumber    String    @map("identification_number")
   expireDate              DateTime  @map("expire_date")
-  taxIdentificationNumber BigInt    @map("tax_identification_number")
+  taxIdentificationNumber String    @map("tax_identification_number")
   createdAt               DateTime  @default(now()) @map("created_at")
   updatedAt               DateTime? @updatedAt @map("updated_at")
 
-  member           Member               @relation(fields: [memberId], references: [id])
+  member           Member               @relation(fields: [memberId], references: [id], onDelete: Cascade)
   identityDocument IdentityDocumentType @relation(fields: [identityDocumentTypeId], references: [id])
 
   @@map("identification_documents")
@@ -87,7 +87,7 @@ model Address {
   createdAt  DateTime  @default(now()) @map("created_at")
   updatedAt  DateTime? @updatedAt @map("updated_at")
 
-  member Member @relation(fields: [memberId], references: [id])
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
 
   @@map("addresses")
 }
@@ -106,7 +106,7 @@ model Guardian {
   createdAt            DateTime  @default(now()) @map("created_at")
   updatedAt            DateTime? @updatedAt @map("updated_at")
 
-  Member             Member             @relation(fields: [memberId], references: [id])
+  Member             Member             @relation(fields: [memberId], references: [id], onDelete: Cascade)
   RelationshipDegree RelationshipDegree @relation(fields: [relationshipDegreeId], references: [id])
 
   @@map("guardians")
