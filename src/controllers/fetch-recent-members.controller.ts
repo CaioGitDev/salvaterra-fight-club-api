@@ -24,12 +24,12 @@ export class FetchRecentMembersController {
   async handle(
     @Query('page', queryValidationPipe) page: PageQueryParamsSchema,
   ) {
-    const perPage = 10
+    const perPage = 100
     const members = await this.prisma.member.findMany({
       take: perPage,
       skip: (page - 1) * perPage,
       orderBy: {
-        membershipNumber: 'asc',
+        membershipNumber: 'desc',
       },
       include: {
         IdentityDocument: true,

@@ -9,36 +9,35 @@ import { z } from 'zod'
 const createMemberBodySchema = z.object({
   photoUrl: z.string().nullable().default(null),
   fullName: z.string(),
-  gender_id: z.coerce.number(),
+  genderId: z.coerce.number(),
   dateOfBirth: z.coerce.date(),
-  nationality_id: z.number(),
+  nationalityId: z.number(),
   placeOfBirth: z.string(),
   contact: z.string(),
   email: z.string().email(),
-  modality_id: z.coerce.number(),
-  frequency_id: z.coerce.number(),
-  memberType_id: z.coerce.number(),
-  paymentFrequency_id: z.number(),
+  modalityId: z.coerce.number(),
+  frequencyId: z.coerce.number(),
+  memberTypeId: z.coerce.number(),
+  paymentFrequencyId: z.number(),
   termsAndConditions: z.boolean(),
   healthDeclaration: z.boolean(),
-  createdBy: z.string().uuid(),
-  identityDocument: z.object({
-    identityDocumentType_id: z.number(),
+  IdentityDocument: z.object({
+    identityDocumentTypeId: z.number(),
     identificationNumber: z.string(),
     expireDate: z.coerce.date(),
     taxIdentificationNumber: z.string(),
   }),
-  address: z.object({
+  Address: z.object({
     address: z.string(),
     city: z.string(),
     county: z.string(),
     parish: z.string(),
     postalCode: z.string(),
   }),
-  guardian: z
+  Guardian: z
     .object({
       fullName: z.string(),
-      relationshipDegree_id: z.number(),
+      relationshipDegreeId: z.number(),
       contact: z.string(),
       address: z.string(),
       city: z.string(),
@@ -81,56 +80,58 @@ export class CreateMemberController {
       data: {
         photoUrl: body.photoUrl,
         fullName: body.fullName,
-        genderId: body.gender_id,
+        genderId: body.genderId,
         dateOfBirth: new Date(body.dateOfBirth),
-        nationalityId: body.nationality_id,
+        nationalityId: body.nationalityId,
         placeOfBirth: body.placeOfBirth,
         contact: body.contact,
         email: body.email,
-        modalityId: body.modality_id,
-        frequencyId: body.frequency_id,
-        memberTypeId: body.memberType_id,
-        paymentFrequencyId: body.paymentFrequency_id,
+        modalityId: body.modalityId,
+        frequencyId: body.frequencyId,
+        memberTypeId: body.memberTypeId,
+        paymentFrequencyId: body.paymentFrequencyId,
         termsAndConditions: body.termsAndConditions,
         healthDeclaration: body.healthDeclaration,
         createdBy: userId,
         IdentityDocument: {
           create: {
             identityDocumentTypeId:
-              body.identityDocument.identityDocumentType_id,
-            identificationNumber: body.identityDocument.identificationNumber,
-            expireDate: new Date(body.identityDocument.expireDate),
+              body.IdentityDocument.identityDocumentTypeId,
+            identificationNumber: body.IdentityDocument.identificationNumber,
+            expireDate: new Date(body.IdentityDocument.expireDate),
             taxIdentificationNumber:
-              body.identityDocument.taxIdentificationNumber,
+              body.IdentityDocument.taxIdentificationNumber,
           },
         },
         Address: {
           create: {
-            address: body.address.address,
-            city: body.address.city,
-            county: body.address.county,
-            parish: body.address.parish,
-            postalCode: body.address.postalCode,
+            address: body.Address.address,
+            city: body.Address.city,
+            county: body.Address.county,
+            parish: body.Address.parish,
+            postalCode: body.Address.postalCode,
           },
         },
       },
     })
 
     // check if body contains guardian
-    if (body.guardian) {
+    if (body.Guardian) {
       await this.prisma.guardian.create({
         data: {
-          fullName: body.guardian.fullName,
+          fullName: body.Guardian.fullName,
           memberId: member.id,
-          relationshipDegreeId: body.guardian.relationshipDegree_id,
-          contact: body.guardian.contact,
-          address: body.guardian.address,
-          city: body.guardian.city,
-          county: body.guardian.county,
-          parish: body.guardian.parish,
-          postalCode: body.guardian.postalCode,
+          relationshipDegreeId: body.Guardian.relationshipDegreeId,
+          contact: body.Guardian.contact,
+          address: body.Guardian.address,
+          city: body.Guardian.city,
+          county: body.Guardian.county,
+          parish: body.Guardian.parish,
+          postalCode: body.Guardian.postalCode,
         },
       })
     }
+
+    return member
   }
 }
