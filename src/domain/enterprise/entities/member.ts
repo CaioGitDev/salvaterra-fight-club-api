@@ -8,7 +8,7 @@ import { Optional } from '@/core/types/optional'
 export interface MemberProps {
   id: UniqueEntityID
   memberShipNumber?: number
-  photoUrl: string
+  photoUrl?: string
   fullName: string
   genderId: number
   dateOfBirth: Date
@@ -39,7 +39,7 @@ export class Member extends AggregateRoot<MemberProps> {
   }
 
   get photoUrl() {
-    return this.props.photoUrl
+    return this.props.photoUrl ?? ''
   }
 
   set photoUrl(photoUrl: string) {
@@ -203,7 +203,7 @@ export class Member extends AggregateRoot<MemberProps> {
   }
 
   static create(
-    props: Optional<MemberProps, 'createdAt'>,
+    props: Optional<MemberProps, 'createdAt' | 'photoUrl'>,
     id?: UniqueEntityID,
   ) {
     return new Member(
