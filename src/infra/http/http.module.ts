@@ -5,6 +5,7 @@ import { FetchMembersController } from './controllers/fetch-members.controller'
 import { CreateAccountController } from './controllers/create-account.controller'
 import { PutMemberAddressController } from './controllers/put-member-address.controller'
 import { DatabaseModule } from '../database/database.module'
+import { PutMemberIdentityDocumentController } from './controllers/put-member-identity-document.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -14,6 +15,7 @@ import { DatabaseModule } from '../database/database.module'
     CreateMemberController,
     FetchMembersController,
     PutMemberAddressController,
+    PutMemberIdentityDocumentController,
   ],
 })
 export class HttpModule {}
