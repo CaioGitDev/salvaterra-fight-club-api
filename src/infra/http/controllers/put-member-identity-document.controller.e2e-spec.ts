@@ -23,7 +23,7 @@ describe('Put member identity document (E2E)', () => {
     await app.init()
   })
 
-  test('[GET] /member/identity-document', async () => {
+  test('[PUT] /member/identity-document', async () => {
     const user = await prisma.user.create({
       data: {
         name: 'Test',
@@ -60,18 +60,6 @@ describe('Put member identity document (E2E)', () => {
         },
         Address: {
           create: {
-            address: 'Rua das Flores',
-            city: 'Porto',
-            county: 'Porto',
-            parish: 'Porto',
-            postalCode: '4000-000',
-          },
-        },
-        Guardian: {
-          create: {
-            fullName: 'Jane Doe',
-            relationshipDegreeId: 1,
-            contact: '912345678',
             address: 'Rua das Flores',
             city: 'Porto',
             county: 'Porto',
