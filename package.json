@@ -13,7 +13,7 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "start:db": "docker compose up -D",
+    "start:db": "docker compose up -d",
     "seed": "node prisma/seed.js",
     "test": "vitest run",
     "test:watch": "vitest",
