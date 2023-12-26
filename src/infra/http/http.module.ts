@@ -10,6 +10,7 @@ import { CreateMemberGuardianController } from './controllers/create-member-guar
 import { PutMemberGuardianController } from './controllers/put-member-guardian.controller'
 import { GetMemberController } from './controllers/get-member.controller'
 import { GetMemberGuardianController } from './controllers/get-member-guardian.controller'
+import { FetchMembersColumnsController } from './controllers/fetch-members-columns.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -23,6 +24,7 @@ import { GetMemberGuardianController } from './controllers/get-member-guardian.c
     CreateMemberGuardianController,
     PutMemberGuardianController,
     GetMemberController,
+    FetchMembersColumnsController,
     GetMemberGuardianController,
   ],
 })
