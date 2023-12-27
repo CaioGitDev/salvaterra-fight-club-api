@@ -75,3 +75,26 @@ Authorization: Bearer {{authToken}}
 GET {{baseUrl}}/members
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
+
+###
+
+# @name create_payment
+POST {{baseUrl}}/member/payment
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "memberId": "3f49bade-fcb9-466d-bd1d-bee911df9962",
+    "paymentType": "Cota mensal",
+    "paymentMethod": "Dinheiro",
+    "paymentAmount": 35,
+    "paymentDate": "2023-12-26T00:00:00.000Z"
+}
+
+###
+
+# @name fetch_payments
+GET {{baseUrl}}/members/payments?month=12&year=2023
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+###
