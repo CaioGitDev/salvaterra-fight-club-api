@@ -48,6 +48,7 @@ model Member {
   IdentityDocument IdentityDocument[]
   Address          Address[]
   Guardian         Guardian[]
+  payment          Payment[]
 
   user             User             @relation(fields: [createdBy], references: [id])
   gender           Gender           @relation(fields: [genderId], references: [id])
@@ -203,4 +204,48 @@ model IdentityDocumentType {
 enum Role {
   USER
   ADMIN
+}
+
+model Payment {
+  id            String        @id @unique @default(uuid())
+  memberId      String        @map("member_id")
+  paymentType   PaymentType   @map("payment_type")
+  paymentDate   DateTime      @map("payment_date")
+  paymentAmount Float         @map("payment_amount")
+  paymentMethod PaymentMethod @map("payment_method")
+  createdAt     DateTime      @default(now()) @map("created_at")
+  createdBy     String        @map("created_by")
+  updatedAt     DateTime?     @updatedAt @map("updated_at")
+
+  PaymentRecipts PaymentRecipts[]
+
+  member Member @relation(fields: [memberId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+enum PaymentMethod {
+  MBWAY
+  MULTIBANCO
+  TRANSFERENCIA_BANCARIA
+  DINHEIRO
+}
+
+enum PaymentType {
+  COTA_MENSAL
+  COTA_ANUAL
+  SEGURO
+}
+
+model PaymentRecipts {
+  id           String    @id @unique @default(uuid())
+  paymentId    String    @map("payment_id")
+  reciptNumber String    @map("recipt_number")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime? @updatedAt @map("updated_at")
+
+  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  createdBy String  @map("created_by")
+
+  @@map("payment_recipts")
 }

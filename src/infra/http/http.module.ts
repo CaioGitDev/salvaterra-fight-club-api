@@ -11,6 +11,8 @@ import { PutMemberGuardianController } from './controllers/put-member-guardian.c
 import { GetMemberController } from './controllers/get-member.controller'
 import { GetMemberGuardianController } from './controllers/get-member-guardian.controller'
 import { FetchMembersColumnsController } from './controllers/fetch-members-columns.controller'
+import { CreatePaymentController } from './controllers/create-payment.controller'
+import { FetchPaymentsController } from './controllers/fetch-payments.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -26,6 +28,8 @@ import { FetchMembersColumnsController } from './controllers/fetch-members-colum
     GetMemberController,
     FetchMembersColumnsController,
     GetMemberGuardianController,
+    CreatePaymentController,
+    FetchPaymentsController,
   ],
 })
 export class HttpModule {}
