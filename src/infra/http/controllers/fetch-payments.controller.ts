@@ -22,6 +22,11 @@ export class FetchPaymentsController {
                 parish: true,
               },
             },
+            IdentityDocument: {
+              select: {
+                taxIdentificationNumber: true,
+              },
+            },
           },
         },
       },

@@ -98,3 +98,15 @@ GET {{baseUrl}}/members/payments?month=12&year=2023
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 ###
+
+# @name create_payment_receipt
+POST {{baseUrl}}/payment/receipts
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+    "paymentId": "05ddabef-5aa2-48aa-83a5-ae52b9d888ad",
+    "receiptTaxDescription": "Insento Artigo 9.º do CIVA (Ou similar)",
+    "receiptTaxPercentage": 0
+}
+###

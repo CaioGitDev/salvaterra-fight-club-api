@@ -13,6 +13,7 @@ import { GetMemberGuardianController } from './controllers/get-member-guardian.c
 import { FetchMembersColumnsController } from './controllers/fetch-members-columns.controller'
 import { CreatePaymentController } from './controllers/create-payment.controller'
 import { FetchPaymentsController } from './controllers/fetch-payments.controller'
+import { CreatePaymentReceiptController } from './controllers/create-payment-receipt.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -30,6 +31,7 @@ import { FetchPaymentsController } from './controllers/fetch-payments.controller
     GetMemberGuardianController,
     CreatePaymentController,
     FetchPaymentsController,
+    CreatePaymentReceiptController,
   ],
 })
 export class HttpModule {}
