@@ -40,6 +40,15 @@ export class CreatePaymentReceiptController {
 
     if (!payment) throw new Error('Payment not found')
 
+    const paymentReceipt = await this.prisma.paymentRecipts.findFirst({
+      where: {
+        paymentId,
+      },
+    })
+
+    if (paymentReceipt) {
+      return { receipt: paymentReceipt }
+    }
     // create method to generate sequencial number with this format 001/2023
     const currentYear = new Date().getFullYear()
     const { receiptNumber } = await this.prisma.paymentRecipts.count({
