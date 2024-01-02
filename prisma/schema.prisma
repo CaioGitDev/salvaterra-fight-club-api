@@ -238,14 +238,17 @@ enum PaymentType {
 }
 
 model PaymentRecipts {
-  id           String    @id @unique @default(uuid())
-  paymentId    String    @map("payment_id")
-  reciptNumber String    @map("recipt_number")
-  createdAt    DateTime  @default(now()) @map("created_at")
-  updatedAt    DateTime? @updatedAt @map("updated_at")
+  id                    String    @id @unique @default(uuid())
+  paymentId             String    @map("payment_id")
+  receiptNumber         Int       @map("recipt_number")
+  receiptYear           Int       @map("recipt_year")
+  receiptTaxDescription String    @map("receipt_tax_description")
+  receiptTaxPercentage  Float     @map("receipt_tax_percentage")
+  createdAt             DateTime  @default(now()) @map("created_at")
+  updatedAt             DateTime? @updatedAt @map("updated_at")
+  createdBy             String    @map("created_by")
 
-  payment   Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
-  createdBy String  @map("created_by")
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
   @@map("payment_recipts")
 }
