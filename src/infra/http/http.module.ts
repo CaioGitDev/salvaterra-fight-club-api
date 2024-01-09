@@ -14,6 +14,7 @@ import { FetchMembersColumnsController } from './controllers/fetch-members-colum
 import { CreatePaymentController } from './controllers/create-payment.controller'
 import { FetchPaymentsController } from './controllers/fetch-payments.controller'
 import { CreatePaymentReceiptController } from './controllers/create-payment-receipt.controller'
+import { PutMemberController } from './controllers/put-member.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -32,6 +33,7 @@ import { CreatePaymentReceiptController } from './controllers/create-payment-rec
     CreatePaymentController,
     FetchPaymentsController,
     CreatePaymentReceiptController,
+    PutMemberController,
   ],
 })
 export class HttpModule {}
