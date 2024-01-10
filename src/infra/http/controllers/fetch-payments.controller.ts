@@ -91,12 +91,20 @@ export class FetchPaymentsController {
       },
     })
 
+    const totalPaymentsAmount = payments.reduce((acc, payment) => {
+      if (payment.paymentType === 'COTA_MENSAL') {
+        return acc + payment.paymentAmount
+      }
+      return acc
+    }, 0)
+
     return {
       payments,
       summary: {
         membersWithoutPayment,
         totalMissingPayments: membersWithoutPayment.length,
         totalMembers,
+        totalPaymentsAmount,
       },
     }
   }
