@@ -15,6 +15,7 @@ import { CreatePaymentController } from './controllers/create-payment.controller
 import { FetchPaymentsController } from './controllers/fetch-payments.controller'
 import { CreatePaymentReceiptController } from './controllers/create-payment-receipt.controller'
 import { PutMemberController } from './controllers/put-member.controller'
+import { CreateAttendanceController } from './controllers/create-attendance.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -34,6 +35,7 @@ import { PutMemberController } from './controllers/put-member.controller'
     FetchPaymentsController,
     CreatePaymentReceiptController,
     PutMemberController,
+    CreateAttendanceController,
   ],
 })
 export class HttpModule {}
