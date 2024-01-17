@@ -57,6 +57,7 @@ model Member {
   frequency        Frequency        @relation(fields: [frequencyId], references: [id])
   memberType       MemberType       @relation(fields: [memberTypeId], references: [id])
   paymentFrequency PaymentFrequency @relation(fields: [paymentFrequencyId], references: [id])
+  Attendance       Attendance[]
 
   @@map("members")
 }
@@ -136,12 +137,13 @@ model Nationality {
 }
 
 model Modality {
-  id          Int      @id @unique @default(autoincrement())
+  id          Int          @id @unique @default(autoincrement())
   name        String
   description String?
-  createdAt   DateTime @default(now()) @map("created_at")
-  active      Boolean  @default(true)
+  createdAt   DateTime     @default(now()) @map("created_at")
+  active      Boolean      @default(true)
   Member      Member[]
+  Attendance  Attendance[]
 
   @@map("modalities")
 }
@@ -251,4 +253,19 @@ model PaymentRecipts {
   payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
 
   @@map("payment_recipts")
+}
+
+model Attendance {
+  id             String    @id @unique @default(uuid())
+  memberId       String    @map("member_id")
+  attendanceDate DateTime  @map("attendance_date")
+  modalityId     Int       @map("modality_id")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  createdBy      String    @map("created_by")
+  updatedAt      DateTime? @updatedAt @map("updated_at")
+
+  member   Member   @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  modality Modality @relation(fields: [modalityId], references: [id], onDelete: Cascade)
+
+  @@map("attendances")
 }
