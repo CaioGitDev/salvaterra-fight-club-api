@@ -33,7 +33,7 @@ model Member {
   nationalityId      Int       @map("nationality_id")
   placeOfBirth       String    @map("place_of_birth")
   contact            String
-  email              String    @unique()
+  email              String
   modalityId         Int       @map("modality_id")
   frequencyId        Int       @map("frequency_id")
   memberTypeId       Int       @map("memberType_id")
