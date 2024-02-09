@@ -67,15 +67,6 @@ export class CreateMemberController {
     const { sub: userId } = user
     const { email } = body
 
-    // check if member already exists
-    const memberExists = await this.prisma.member.findUnique({
-      where: {
-        email,
-      },
-    })
-
-    if (memberExists) throw new Error('Member already exists')
-
     const member = await this.prisma.member.create({
       data: {
         photoUrl: body.photoUrl,
