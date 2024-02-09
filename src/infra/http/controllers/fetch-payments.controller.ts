@@ -70,7 +70,12 @@ export class FetchPaymentsController {
     const membersWithoutPayment = await this.prisma.member.findMany({
       where: {
         id: {
-          notIn: payments.map((payment) => payment.memberId),
+          notIn: payments.map((payment) => {
+            if (payment.paymentType === 'COTA_MENSAL') {
+              return payment.memberId
+            }
+            return ''
+          }),
         },
         memberTypeId: {
           notIn: [4, 5],
