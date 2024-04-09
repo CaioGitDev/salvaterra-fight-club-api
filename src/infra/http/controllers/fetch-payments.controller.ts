@@ -47,6 +47,7 @@ export class FetchPaymentsController {
             id: true,
             membershipNumber: true,
             fullName: true,
+
             Address: {
               select: {
                 postalCode: true,
@@ -61,6 +62,7 @@ export class FetchPaymentsController {
           },
         },
       },
+
       orderBy: {
         createdAt: 'desc',
       },
@@ -77,6 +79,7 @@ export class FetchPaymentsController {
             return ''
           }),
         },
+        active: true,
         memberTypeId: {
           notIn: [4, 5],
         },
@@ -84,6 +87,7 @@ export class FetchPaymentsController {
       select: {
         id: true,
         fullName: true,
+        memberTypeId: true,
       },
     })
 
