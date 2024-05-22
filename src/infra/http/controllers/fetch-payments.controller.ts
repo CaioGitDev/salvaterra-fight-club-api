@@ -68,16 +68,15 @@ export class FetchPaymentsController {
       },
     })
 
+    const memberIdsWithMonthlyQuota = payments
+      .filter((payment) => payment.paymentType === 'COTA_MENSAL')
+      .map((payment) => payment.memberId)
+
     // get all members without payment this month and year
     const membersWithoutPayment = await this.prisma.member.findMany({
       where: {
         id: {
-          notIn: payments.map((payment) => {
-            if (payment.paymentType === 'COTA_MENSAL') {
-              return payment.memberId
-            }
-            return ''
-          }),
+          notIn: memberIdsWithMonthlyQuota,
         },
         active: true,
         memberTypeId: {
@@ -87,7 +86,10 @@ export class FetchPaymentsController {
       select: {
         id: true,
         fullName: true,
-        memberTypeId: true,
+        modality: true,
+      },
+      orderBy: {
+        fullName: 'asc',
       },
     })
 
