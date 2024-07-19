@@ -20,7 +20,7 @@
     "test:cov": "vitest run --coverage",
     "test:debug": "vitest --inspect-brk --inspect --logHeapUsage --threads=false",
     "test:e2e": "vitest run --config ./vitest.config.e2e.ts",
-    "testFile:e2e": "vitest run --config ./vitest.config.e2e.ts  src\\infra\\http\\controllers\\create-payment.controller.e2e-spec.ts"
+    "testFile:e2e": "vitest run --config ./vitest.config.e2e.ts  src\\infra\\http\\controllers\\create-category.controller.e2e-spec.ts"
   },
   "prisma": {
     "seed": "node prisma/seed.js"
