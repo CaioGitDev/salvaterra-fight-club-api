@@ -11,14 +11,17 @@ datasource db {
 }
 
 model User {
-  id        String    @id @default(uuid())
-  name      String
-  email     String    @unique
-  password  String
-  role      Role      @default(USER)
-  createdAt DateTime  @default(now()) @map("created_at")
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  Member    Member[]
+  id               String             @id @default(uuid())
+  name             String
+  email            String             @unique
+  password         String
+  role             Role               @default(USER)
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime?          @updatedAt @map("updated_at")
+  Member           Member[]
+  Product          Product[]
+  Category         Category[]
+  StockTransaction StockTransaction[]
 
   @@map("users")
 }
@@ -268,4 +271,53 @@ model Attendance {
   modality Modality @relation(fields: [modalityId], references: [id], onDelete: Cascade)
 
   @@map("attendances")
+}
+
+// inventory management
+
+model Product {
+  id               String             @id @unique @default(uuid())
+  name             String
+  description      String?
+  price            Float
+  quantity         Int
+  createdAt        DateTime           @default(now()) @map("created_at")
+  updatedAt        DateTime?          @updatedAt @map("updated_at")
+  userId           String             @map("user_id")
+  Category         Category[]
+  StockTransaction StockTransaction[]
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("products")
+}
+
+model Category {
+  id          String    @id @unique @default(uuid())
+  name        String
+  description String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  userId      String    @map("user_id")
+  Product     Product[]
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("categories")
+}
+
+model StockTransaction {
+  id        String    @id @unique @default(uuid())
+  productId String    @map("product_id")
+  quantity  Int
+  price     Float
+  createdAt DateTime  @default(now()) @map("created_at")
+  createdBy String    @map("created_by")
+  updatedAt DateTime? @updatedAt @map("updated_at")
+  userId    String    @map("user_id")
+
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@map("stock_transactions")
 }
