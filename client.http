@@ -109,3 +109,14 @@ Authorization: Bearer {{authToken}}
     "receiptTaxPercentage": 0
 }
 ###
+
+# @name create_category
+POST {{baseUrl}}/categories
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+   "name": "Vestuário",
+   "description": "Roupas e acessórios"
+}
+###
