@@ -60,11 +60,7 @@ describe('Put Product (E2E)', () => {
         description: 'Product 1 description',
         price: 100,
         quantity: 1,
-        Category: {
-          connect: {
-            id: category.id,
-          },
-        },
+        categoryId: category.id,
         userId,
       },
     })
@@ -135,11 +131,7 @@ describe('Put Product (E2E)', () => {
         description: 'Product 1 description',
         price: 100,
         quantity: 1,
-        Category: {
-          connect: {
-            id: category.id,
-          },
-        },
+        categoryId: category.id,
         userId,
       },
     })
@@ -149,10 +141,9 @@ describe('Put Product (E2E)', () => {
       .put(`/product/${id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        Category: category2.id,
+        categoryId: category2.id,
       })
 
-    console.log(response)
     expect(response.body).toEqual(
       expect.objectContaining({
         categoryId: category2.id,
@@ -179,11 +170,7 @@ describe('Put Product (E2E)', () => {
         description: 'Product 1 description',
         price: 100,
         quantity: 1,
-        Category: {
-          connect: {
-            id: category.id,
-          },
-        },
+        categoryId: category.id,
         userId,
       },
     })
