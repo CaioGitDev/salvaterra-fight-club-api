@@ -21,6 +21,7 @@ import { FetchCategoriesController } from './controllers/fetch/fetch-categories.
 import { PutCategoryController } from './controllers/put/put-category.controller'
 import { DeleteCategoryController } from './controllers/delete/delete-category.controller'
 import { CreateProductController } from './controllers/create/create-product.controller'
+import { FetchProductsController } from './controllers/fetch/fetch-products.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -46,6 +47,7 @@ import { CreateProductController } from './controllers/create/create-product.con
     PutCategoryController,
     DeleteCategoryController,
     CreateProductController,
+    FetchProductsController,
   ],
 })
 export class HttpModule {}
