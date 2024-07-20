@@ -56,9 +56,7 @@ export class CreateProductController {
         description,
         price,
         quantity,
-        Category: {
-          connect: { id: categoryId },
-        },
+        categoryId,
         userId,
       },
     })
