@@ -116,7 +116,13 @@ Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
-   "name": "Vestuário",
+   "name": "Vestuário 2",
    "description": "Roupas e acessórios"
 }
+###
+
+# @name fetch_category
+GET  {{baseUrl}}/categories
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
 ###

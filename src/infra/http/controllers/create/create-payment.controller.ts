@@ -4,7 +4,7 @@ import { TokenPayload } from '@/infra/auth/jwt.strategy'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Controller, UseGuards, Post, HttpCode, Body } from '@nestjs/common'
 import { z } from 'zod'
-import { ZodValidationPipe } from '../pipes/zod-validation-pipe'
+import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 
 type PaymentMethod =
   | 'MBWAY'
