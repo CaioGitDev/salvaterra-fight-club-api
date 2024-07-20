@@ -5,7 +5,7 @@ import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 
-describe('Put category (E2E)', () => {
+describe('Delete category (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let jwt: JwtService
@@ -23,7 +23,7 @@ describe('Put category (E2E)', () => {
     await app.init()
   })
 
-  test('[PUT] /category', async () => {
+  test('[DELETE] /category', async () => {
     const user = await prisma.user.create({
       data: {
         name: 'Test',
@@ -43,19 +43,14 @@ describe('Put category (E2E)', () => {
     })
 
     const response = await request(app.getHttpServer())
-      .put('/category')
+      .delete(`/category/${category.id}`)
       .set('Authorization', `Bearer ${accessToken}`)
-      .send({
-        id: category.id,
-        name: 'Category 1 updated',
-        description: 'Category 1 description updated',
-      })
 
     expect(response.status).toBe(200)
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        name: 'Category 1 updated',
+        name: 'Category 1',
       }),
     )
   })

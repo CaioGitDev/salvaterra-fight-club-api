@@ -19,6 +19,7 @@ import { CreateAttendanceController } from './controllers/create/create-attendan
 import { CreateCategoryController } from './controllers/create/create-category.controller'
 import { FetchCategoriesController } from './controllers/fetch/fetch-categories.controller'
 import { PutCategoryController } from './controllers/put/put-category.controller'
+import { DeleteCategoryController } from './controllers/delete/delete-category.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -42,6 +43,7 @@ import { PutCategoryController } from './controllers/put/put-category.controller
     CreateCategoryController,
     FetchCategoriesController,
     PutCategoryController,
+    DeleteCategoryController,
   ],
 })
 export class HttpModule {}
