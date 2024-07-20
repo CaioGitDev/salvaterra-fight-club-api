@@ -281,10 +281,11 @@ model Product {
   description      String?
   price            Float
   quantity         Int
+  categoryId       String             @map("category_id")
   createdAt        DateTime           @default(now()) @map("created_at")
   updatedAt        DateTime?          @updatedAt @map("updated_at")
   userId           String             @map("user_id")
-  Category         Category[]
+  Category         Category           @relation(fields: [categoryId], references: [id])
   StockTransaction StockTransaction[]
 
   user User @relation(fields: [userId], references: [id])

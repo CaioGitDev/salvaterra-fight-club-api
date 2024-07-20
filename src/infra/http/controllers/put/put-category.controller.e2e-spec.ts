@@ -34,7 +34,7 @@ describe('Put category (E2E)', () => {
 
     const accessToken = jwt.sign({ sub: user.id })
 
-    const category = await prisma.category.create({
+    const { id } = await prisma.category.create({
       data: {
         name: 'Category 1',
         description: 'Category 1 description',
@@ -43,10 +43,9 @@ describe('Put category (E2E)', () => {
     })
 
     const response = await request(app.getHttpServer())
-      .put('/category')
+      .put(`/category/${id}`)
       .set('Authorization', `Bearer ${accessToken}`)
       .send({
-        id: category.id,
         name: 'Category 1 updated',
         description: 'Category 1 description updated',
       })

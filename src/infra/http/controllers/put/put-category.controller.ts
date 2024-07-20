@@ -1,4 +1,4 @@
-import { Body, Controller, Put, UseGuards } from '@nestjs/common'
+import { Body, Controller, Param, Put, UseGuards } from '@nestjs/common'
 import { JwtAuthGuard } from '@/infra/auth/jwt-auth.guard'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
@@ -6,17 +6,19 @@ import { CurrentUser } from '@/infra/auth/current-user-decorator'
 import { TokenPayload } from '@/infra/auth/jwt.strategy'
 import { z } from 'zod'
 
+const putCategoryIdParamSchema = z.string().uuid()
 const putCategoryBodySchema = z.object({
-  id: z.string().uuid(),
   name: z.string().optional(),
   description: z.string().optional(),
 })
 
 type PutCategoryBodySchema = z.infer<typeof putCategoryBodySchema>
+type PutCategoryIdParamSchema = z.infer<typeof putCategoryIdParamSchema>
 
 const bodyValidationPipe = new ZodValidationPipe(putCategoryBodySchema)
+const paramValidationPipe = new ZodValidationPipe(putCategoryIdParamSchema)
 
-@Controller('/category')
+@Controller('/category/:id')
 @UseGuards(JwtAuthGuard)
 export class PutCategoryController {
   constructor(private prisma: PrismaService) {}
@@ -25,9 +27,9 @@ export class PutCategoryController {
   async handle(
     @Body(bodyValidationPipe) body: PutCategoryBodySchema,
     @CurrentUser() user: TokenPayload,
+    @Param('id', paramValidationPipe) id: PutCategoryIdParamSchema,
   ) {
     const { sub: userId } = user
-    const { id, name, description } = body
 
     const categoryExists = await this.prisma.category.findUnique({
       where: {
@@ -42,8 +44,7 @@ export class PutCategoryController {
         id,
       },
       data: {
-        name,
-        description,
+        ...body,
         userId,
       },
     })
