@@ -18,6 +18,7 @@ import { PutMemberController } from './controllers/put/put-member.controller'
 import { CreateAttendanceController } from './controllers/create/create-attendance.controller'
 import { CreateCategoryController } from './controllers/create/create-category.controller'
 import { FetchCategoriesController } from './controllers/fetch/fetch-categories.controller'
+import { PutCategoryController } from './controllers/put/put-category.controller'
 
 @Module({
   imports: [DatabaseModule],
@@ -40,6 +41,7 @@ import { FetchCategoriesController } from './controllers/fetch/fetch-categories.
     CreateAttendanceController,
     CreateCategoryController,
     FetchCategoriesController,
+    PutCategoryController,
   ],
 })
 export class HttpModule {}
