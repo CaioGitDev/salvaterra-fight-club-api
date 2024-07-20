@@ -307,14 +307,15 @@ model Category {
 }
 
 model StockTransaction {
-  id        String    @id @unique @default(uuid())
-  productId String    @map("product_id")
-  quantity  Int
-  price     Float
-  createdAt DateTime  @default(now()) @map("created_at")
-  createdBy String    @map("created_by")
-  updatedAt DateTime? @updatedAt @map("updated_at")
-  userId    String    @map("user_id")
+  id          String    @id @unique @default(uuid())
+  productId   String    @map("product_id")
+  quantity    Int
+  price       Float
+  observation String?
+  createdAt   DateTime  @default(now()) @map("created_at")
+  createdBy   String    @map("created_by")
+  updatedAt   DateTime? @updatedAt @map("updated_at")
+  userId      String    @map("user_id")
 
   product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
   user    User    @relation(fields: [userId], references: [id])
