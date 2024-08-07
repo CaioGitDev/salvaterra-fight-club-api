@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Post,
+  Res,
   UnauthorizedException,
   UsePipes,
 } from '@nestjs/common'
@@ -10,6 +11,7 @@ import { compare } from 'bcryptjs'
 import { ZodValidationPipe } from '@/infra/http/pipes/zod-validation-pipe'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { z } from 'zod'
+import { Response } from 'express'
 
 const authenticateBodySchema = z.object({
   email: z.string().email(),
@@ -27,7 +29,10 @@ export class AuthenticateController {
 
   @Post()
   @UsePipes(new ZodValidationPipe(authenticateBodySchema))
-  async handle(@Body() body: AuthenticateBodySchema) {
+  async handle(
+    @Body() body: AuthenticateBodySchema,
+    @Res({ passthrough: true }) response: Response,
+  ) {
     const { email, password } = body
 
     const user = await this.prisma.user.findUnique({
@@ -48,6 +53,19 @@ export class AuthenticateController {
 
     const accessToken = this.jwt.sign({
       sub: user.id,
+      user: {
+        email: user.email,
+        name: user.name,
+        role: user.role,
+      },
+    })
+
+    // add token to cookie with httponly
+    response.cookie('access_token', accessToken, {
+      maxAge: 1000 * 60 * 15, // expire after 15 minutes
+      httpOnly: true, // Cookie will not be exposed to client side code
+      sameSite: 'none', // If client and server origins are different
+      secure: true, // use with HTTPS only
     })
 
     return {
